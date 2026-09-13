@@ -1,25 +1,38 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TextInput, ScrollView, Button, Alert } from 'react-native';
 
+const food = [
+  'Pizza', 'Burger', 'Pasta', 'Salad', 'Sushi',
+  'Tacos', 'Sandwich', 'Ramen', 'Chicken',
+  'Fish', 'Rice', 'Noodles', 'Soup', 'Bread',
+  'Cheese', 'Eggs', 'Pancakes', 'Waffles'
+];
 
 export default function HomeScreen() {
   return (
-    /**
-     * Let’s look at two components that are found in the majority of mobile interfaces: <Text> and <Image>
-     *
-     * The <Text> component is React Native’s way of rendering text.
-     * Unlike in web development, where text can be placed directly inside any element,
-     * in React Native, all text must be wrapped in a <Text> component
-     *
-     * The <Text> component supports numerous props
-     *
-     * The <Image> component displays images from various sources—local assets,
-     * network resources, or even base64 encoded data.
-     * It requires explicit width and height dimensions to render properly
-     */
     <View>
-      <Text>Welcome to My App!</Text>
-      <Image source={require('../../assets/images/beer.jpeg')}
-        style={{ height: 200, width: 200 }} />
+
+  {/* The <TextInput> component allows users to enter text,
+  similar to an HTML input or textarea.
+  It captures user input and can update the state as the user types */}
+      <TextInput placeholder='Enter your name' />
+
+  {/* The <ScrollView> component provides a scrollable container when
+  content exceeds the screen size, think of a social media feed!
+  Unlike <View>, which shows a fixed area, <ScrollView> allows users to scroll
+  through long lists, images, or text content */}
+      <ScrollView style={{ height: 100 }}>
+        {food.map((item, index) => (
+          <Text key={index}>{item}</Text>
+        ))}
+      </ScrollView>
+
+{/* The <Button> component provides a standard button that users can tap.
+  When pressed, we can link it to functions that perform actions like sending data,
+  navigating screens, or showing alerts: */}
+    <Button
+      title="Press me"
+      onPress={() => Alert.alert('Button pressed!')}
+    />
     </View>
   );
 }
