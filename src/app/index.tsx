@@ -1,62 +1,63 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { View, Text, TextInput, Button, ScrollView } from 'react-native';
+import { TestDataButton } from "../components/TestDataButton";
 
-interface Form {
-  name: string;
-  surname: string;
-  email: string;
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
 }
 
 export default function HomeScreen() {
-  const [form, setForm] = useState<Form>({
-    name: '',
-    surname: '',
-    email: ''
-  });
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todoText, setTodoText] = useState<string>('');
 
-  const [displayForm, setDisplayForm] = useState<Form>({
-    name: '',
-    surname: '',
-    email: ''
-  });
-
-  const handleChange = (field: keyof Form, value: string | number) => {
-    setForm(prev => ({ ...prev, [field]: value }));
+  const addTodo = (): void => {
+    if (todoText.trim() !== '') {
+      const newTodo: Todo = {
+        id: Date.now(),
+        text: todoText,
+        completed: false
+      };
+      setTodos([...todos, newTodo]);
+      setTodoText('');
+    }
   };
 
-  const copyToDisplay = (newForm: Form) => {
-    setDisplayForm(newForm)
-  }
+  const toggleTodo = (id: number): void => {
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    }));
+  };
 
   return (
     <View>
-      <View style={{ padding: 60 }}>
-        <Text style={styles.title}>INFO</Text>
-        <Text>Name: {displayForm.name}</Text>
-        <Text>Surname: {displayForm.surname}</Text>
-        <Text>Email: {displayForm.email}</Text>
+      <View>
+        <Text>My TODO list</Text>
+        <TextInput value={todoText} onChangeText={(value) => setTodoText(value)} placeholder='Enter a new TODO'></TextInput>
+        <Button title='add TODO' onPress={() => addTodo()}></Button>
+        <TestDataButton onAddTestData={setTodos} />
       </View>
-      <View style={{ padding: 60 }}>
-        <Text style={styles.title}>Please tell us about you</Text>
-        <TextInput placeholder='Enter your name' onChangeText={(value) => handleChange('name', value)} />
-        <TextInput placeholder='Enter your surname' onChangeText={(value) => handleChange('surname', value)} />
-        <TextInput placeholder='Enter your email' onChangeText={(value) => handleChange('email', value)} />
-        <Button title="Submit" onPress={() => copyToDisplay(form)}/>
+
+      <View>
+        <Text>TASKS</Text>
+        <ScrollView style={{ height: 400 }}>
+          {todos.length > 0 ? todos.map((item, idx) => (
+            <View key={item.id}>
+              <Text onPress={() => toggleTodo(item.id)}>{item.completed ? '✅' : '▶️'} {item.text}</Text>
+            </View>
+          )) : <Text>No TODOs yet. Add one above!</Text>}
+        </ScrollView>
+      </View>
+
+      <View>
+        <Text>{todos.length > 0 ? `TOTAL: ${todos.length}` : ''}</Text>
+        <Text>{todos.filter(e => e.completed).length > 0 ? `COMPLETED: ${todos.filter(e => e.completed).length}` : ''}</Text>
+
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-  },
-  body: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 22,
-  },
-});
