@@ -1,28 +1,25 @@
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 
 export default function HomeScreen() {
   return (
     /**
-     * In mobile development, views are the foundational UI containers
-     * that help structure the screen. In React Native, the <View> component
-     * serves a similar role—it acts as a wrapper for other UI elements,
-     * allowing us to organize content and layouts effectively.
+     * Let’s look at two components that are found in the majority of mobile interfaces: <Text> and <Image>
      *
-     * The <View> component functions similarly to a <div> in web development
-     * but renders native UI containers instead of HTML elements.
-     * Just as a <div> helps structure a web page, a <View> is used to structure
-     * the layout of a mobile screen.
+     * The <Text> component is React Native’s way of rendering text.
+     * Unlike in web development, where text can be placed directly inside any element,
+     * in React Native, all text must be wrapped in a <Text> component
      *
-     * Views typically contain:
-          Other <View> components for nested layouts
-          Text components for displaying text
-          Image components for displaying images
-          Input components like buttons or text inputs
-          Custom components we build ourselves
+     * The <Text> component supports numerous props
+     *
+     * The <Image> component displays images from various sources—local assets,
+     * network resources, or even base64 encoded data.
+     * It requires explicit width and height dimensions to render properly
      */
     <View>
-      <Text>This is a demo text!</Text>
+      <Text>Welcome to My App!</Text>
+      <Image source={require('../../assets/images/beer.jpeg')}
+        style={{ height: 200, width: 200 }} />
     </View>
   );
 }
