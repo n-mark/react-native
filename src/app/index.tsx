@@ -3,37 +3,39 @@ import { View, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   return (
-  <View style={styles.layout}>
-    <Box />
-  </View>
+    <View style={styles.layout}>
+      <BoxOne isActive='true' />
+      <BoxTwo />
+    </View>
   );
 }
 
-export const Box = () => (
-  /**
-   * In React Native, we can apply multiple styles to a single component
-   * by passing an array of style objects, StyleSheet references,
-   * or a combination of both to the style prop. This approach is similar
-   * to applying multiple CSS classes to an HTML element,
-   * where each class contributes its own set of styles.
-   *
-   * When an array of styles is passed, React Native applies them from left to right,
-   * with the rightmost styles taking precedence and overriding
-   * any conflicting properties from earlier styles in the array.
-   */
-  <View style={[styles.box, { backgroundColor: 'blue' }]} />
+export const BoxOne = (props) => (
+  <View style={[styles.redBox, props.isActive && styles.blueBox]} />
 );
 
+export const BoxTwo = (props) => (
+  <View style={props.isActive ? styles.blueBox : styles.redBox} />
+);
 
 export const styles = StyleSheet.create({
   layout: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  box: {
+
+  redBox: {
     width: 100,
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: "red",
+    borderWidth: 2,
+    borderColor: "white",
+  },
+
+  blueBox: {
+    width: 150,
+    height: 150,
+    backgroundColor: "blue",
   },
 });
