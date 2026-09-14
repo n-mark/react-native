@@ -1,63 +1,40 @@
-import { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
-import { TestDataButton } from "../components/TestDataButton";
+import { View, StyleSheet } from 'react-native';
 
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
 
 export default function HomeScreen() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [todoText, setTodoText] = useState<string>('');
-
-  const addTodo = (): void => {
-    if (todoText.trim() !== '') {
-      const newTodo: Todo = {
-        id: Date.now(),
-        text: todoText,
-        completed: false
-      };
-      setTodos([...todos, newTodo]);
-      setTodoText('');
-    }
-  };
-
-  const toggleTodo = (id: number): void => {
-    setTodos(todos.map(todo => {
-      if (todo.id === id) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    }));
-  };
-
   return (
-    <View>
-      <View>
-        <Text>My TODO list</Text>
-        <TextInput value={todoText} onChangeText={(value) => setTodoText(value)} placeholder='Enter a new TODO'></TextInput>
-        <Button title='add TODO' onPress={() => addTodo()}></Button>
-        <TestDataButton onAddTestData={setTodos} />
-      </View>
-
-      <View>
-        <Text>TASKS</Text>
-        <ScrollView style={{ height: 400 }}>
-          {todos.length > 0 ? todos.map((item, idx) => (
-            <View key={item.id}>
-              <Text onPress={() => toggleTodo(item.id)}>{item.completed ? '✅' : '▶️'} {item.text}</Text>
-            </View>
-          )) : <Text>No TODOs yet. Add one above!</Text>}
-        </ScrollView>
-      </View>
-
-      <View>
-        <Text>{todos.length > 0 ? `TOTAL: ${todos.length}` : ''}</Text>
-        <Text>{todos.filter(e => e.completed).length > 0 ? `COMPLETED: ${todos.filter(e => e.completed).length}` : ''}</Text>
-
-      </View>
+    <View style={styles.layout}>
+      <View style={styles.card} />
+      <View style={styles.card} />
     </View>
   );
 }
+
+/**
+ * With the StyleSheet API, we can write our styling rules
+ * separately and reference them when rendering the components.
+ * These function similarly to CSS Stylesheets and allow styling
+ * rules to be reused for multiple components.
+ *
+ * With the StyleSheet API, we can pull the inline styling
+ * from our <AwesomeBox> component. Doing that allows us to
+ * reuse the styling rules and keep our <AwesomeBox> component readable.
+ */
+const styles = StyleSheet.create({
+  layout: {
+    flex: 1,
+    backgroundColor: '#e5e5e5',
+    justifyContent: 'center'
+  },
+  card: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'white',
+    margin: 16,
+    borderRadius: 2,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    shadowOffset: { height: 1, width: 0.3 }
+  }
+});
