@@ -11,6 +11,18 @@ export default function HomeScreen() {
 }
 
 export const BoxOne = (props) => (
+  /**
+   * In this example, when the nightMode prop is true,
+   * the background color is overridden to black;
+   * otherwise, it remains blue. This approach is particularly useful
+   * when we want to combine multiple base styles and selectively override
+   * specific properties based on a condition.
+   *
+   * Another common technique for dynamic styling is using
+   * the ternary operator to choose between two distinct style objects.
+   * This is especially useful when the styling needs to be mutually exclusive,
+   * such as toggling between a light and dark theme
+   */
   <View style={[styles.redBox, props.isActive && styles.blueBox]} />
 );
 
