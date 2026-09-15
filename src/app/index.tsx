@@ -19,6 +19,7 @@ const MAX_HEIGHT = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
   layout: {
     flex: 1,
+    flexDirection: 'row-reverse',
     backgroundColor: '#e5e5e5',
   },
   box: {
