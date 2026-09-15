@@ -18,11 +18,6 @@ const MAX_HEIGHT = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   layout: {
-    /**
-     * To make layouts dynamic, we use the flex property.
-     * This property allows child components to expand
-     * or shrink to fill available space along the main axis.
-     */
     flex: 1,
     backgroundColor: '#e5e5e5',
   },
